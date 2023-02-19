@@ -1,3 +1,7 @@
+html {
+  font-size: 16px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +9,51 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 1rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.card {
+  box-shadow: 0px -4px 28px -4px rgba(0, 0, 0, 0.1), 5px 0px 15px -3px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 8px 17px -5px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.004);
+  box-shadow: 0px -4px 28px -4px rgba(0, 0, 0, 0.1), 5px 0px 15px -3px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 8px 17px -5px rgba(0, 0, 0, 0.1);
+  transition: all 400ms ease-in-out;
+}
+
+.card-body {
+  position: relative;
+}
+
+.card-spot-button {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-review-block {
+  margin: 24px 0px 16px 0px;
+}
+
+.review {
+  font-size: 0.9rem;
+}
+
+.review-text {
+  font-style: italic;
+  text-align: start;
+}
+
+.review-author {
+  font-weight: 600;
+}
+
+.card-footer {
+  justify-content: space-between;
+  font-size: 1.2rem;
 }
