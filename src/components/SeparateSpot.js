@@ -9,9 +9,9 @@ const SeparateSpot = () => {
   const [spot, setSpot] = useState(context.spots.find(elem => elem.id == id));
 
   const revblock = arr => {
-    return arr.map(rev => {
+    return arr.map((rev, ind) => {
       return (
-        <li>
+        <li key={'li' + ind}>
           <q className='me-2'>{rev.review}</q>
           <cite>{rev.author}</cite>
         </li>
@@ -20,7 +20,7 @@ const SeparateSpot = () => {
   };
 
   return (
-    <div className="row">
+    <div className="row mt-2">
       <div className="col-lg-6">
         <Carousel images={spot.images} carId={'car' + id} />
       </div>
@@ -36,7 +36,7 @@ const SeparateSpot = () => {
             {spot.reviews.length ? revblock(spot.reviews) : "It hasn't been reviewed yet"}
           </ul>
         </div>
-        <Link to={`/spot-edit/${id}`} className='btn d-flex btn-success mb-0 card-spot-button text-center'>Edit the spot</Link>
+        <Link to={`/spot-edit/${id}`} className='btn col-12 mt-5 btn-success btn-down'>Edit the spot</Link>
       </div>
     </div>
   );
