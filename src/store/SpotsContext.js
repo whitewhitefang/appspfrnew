@@ -1,27 +1,14 @@
-import { useState } from "react";
-import Spot from "./Spot";
+import React from "react";
 
-const SpotList = () => {
-  // Mock-data
-  const [data, setData] = useState([
+const SpotsContext = React.createContext({
+  spots: [
     { id: 1, title: "The best Spot", reviews: [{ review: 'The best place and no there are no holes in the fence', author: 'Alice Doggy' }, { review: 'Not bad', author: 'Anonim' }, { review: 'It could be better, but it pretty good enough', author: 'Bob Marley' }], description: "loremOfficia et Lorem labore excepteur sit magna consectetur. Aute et sunt non qui aliqua officia ullamco qui. Aute excepteur dolore adipisicing sit commodo do velit occaecat laboris anim proident consectetur. Reprehenderit nostrud commodo minim eu incididunt Lorem esse sunt nulla qui voluptate.", images: ['https://s.aolcdn.com/hss/storage/midas/aeef5179871545d64c4255fb62573c59/206157458/dog-border-collie-picture-id670803172', 'https://mobimg.b-cdn.net/v3/fetch/6f/6f819bd02ed82aa779b1dd52634f847d.jpeg', 'https://images.squarespace-cdn.com/content/5a284ad2e9bfdf71e4cf2053/1567193703961-80CASN4NDRY37DKW4VMQ/AdobeStock_74093746.jpeg?format=1500w&content-type=image%2Fjpeg'], price: 15 },
     { id: 2, title: "The better Spot", reviews: [{ review: 'Not bad', author: 'Anonim' }, { review: 'It could be better, but it pretty good enough', author: 'Bob Marley' }], description: "Aute et sunt non qui aliqua officia ullamco qui, do velit occaecat laboris anim proident consectetur. Reprehenderit nostrud commodo minim eu incididunt Lorem esse sunt nulla qui voluptate.", images: ['https://s.aolcdn.com/hss/storage/midas/aeef5179871545d64c4255fb62573c59/206157458/dog-border-collie-picture-id670803172', 'https://mobimg.b-cdn.net/v3/fetch/6f/6f819bd02ed82aa779b1dd52634f847d.jpeg', 'https://images.squarespace-cdn.com/content/5a284ad2e9bfdf71e4cf2053/1567193703961-80CASN4NDRY37DKW4VMQ/AdobeStock_74093746.jpeg?format=1500w&content-type=image%2Fjpeg'], price: 10 },
     { id: 3, title: "The best Spot ever", reviews: [{ review: 'The best place and no there are no holes in the fence', author: 'Alice Doggy' }, { review: 'Not bad', author: 'Anonim' }, { review: 'It could be better, but it pretty good enough', author: 'Bob Marley' }], description: "loremOfficia liqua officia ullamco qui. Aute excepteur dolore adipisicing sit commodo do velit occaecat laboris anim proident consectetur. Reprehenderit nostrud commodo minim eu incididunt Lorem esse sunt nulla qui voluptate.", images: ['https://s.aolcdn.com/hss/storage/midas/aeef5179871545d64c4255fb62573c59/206157458/dog-border-collie-picture-id670803172', 'https://mobimg.b-cdn.net/v3/fetch/6f/6f819bd02ed82aa779b1dd52634f847d.jpeg', 'https://images.squarespace-cdn.com/content/5a284ad2e9bfdf71e4cf2053/1567193703961-80CASN4NDRY37DKW4VMQ/AdobeStock_74093746.jpeg?format=1500w&content-type=image%2Fjpeg'], price: 11 },
     { id: 4, title: "The only Spot", reviews: [{ review: 'Not bad', author: 'Anonim' }, { review: 'It could be better, but it pretty good enough', author: 'Bob Marley' }], description: "loremOfficia et Lorem labore excepteur sit magna consectetur. Aute et sunt non qui aliqua officia ullamco qui. Aute excepteur dolore adipisicing sit commodo do velit occaecat laboris anim proident consectetur. Reprehenderit nostrud commodo minim eu incididunt Lorem esse sunt nulla qui voluptate.", images: ['https://s.aolcdn.com/hss/storage/midas/aeef5179871545d64c4255fb62573c59/206157458/dog-border-collie-picture-id670803172', 'https://mobimg.b-cdn.net/v3/fetch/6f/6f819bd02ed82aa779b1dd52634f847d.jpeg', 'https://images.squarespace-cdn.com/content/5a284ad2e9bfdf71e4cf2053/1567193703961-80CASN4NDRY37DKW4VMQ/AdobeStock_74093746.jpeg?format=1500w&content-type=image%2Fjpeg'], price: 15 },
     { id: 5, title: "A Spot", reviews: [], description: "loremOfficia aliqua ullamco qui. Aute excepteur dolore adipisicing sit commodo do velit occaecat laboris anim proident consectetur. Reprehenderit nostrud commodo minim eu incididunt Lorem esse sunt nulla qui voluptate.", images: ['https://s.aolcdn.com/hss/storage/midas/aeef5179871545d64c4255fb62573c59/206157458/dog-border-collie-picture-id670803172', 'https://mobimg.b-cdn.net/v3/fetch/6f/6f819bd02ed82aa779b1dd52634f847d.jpeg', 'https://images.squarespace-cdn.com/content/5a284ad2e9bfdf71e4cf2053/1567193703961-80CASN4NDRY37DKW4VMQ/AdobeStock_74093746.jpeg?format=1500w&content-type=image%2Fjpeg'], price: 9 },
     { id: 6, title: "Simply fine", reviews: [{ review: 'It could be better, but it pretty good enough', author: 'Bob Marley' }], description: "Aute excepteur dolore adipisicing sit commodo do velit occaecat laboris anim proident consectetur. Reprehenderit nostrud commodo minim eu incididunt Lorem esse sunt nulla qui voluptate.", images: ['https://s.aolcdn.com/hss/storage/midas/aeef5179871545d64c4255fb62573c59/206157458/dog-border-collie-picture-id670803172', 'https://mobimg.b-cdn.net/v3/fetch/6f/6f819bd02ed82aa779b1dd52634f847d.jpeg', 'https://images.squarespace-cdn.com/content/5a284ad2e9bfdf71e4cf2053/1567193703961-80CASN4NDRY37DKW4VMQ/AdobeStock_74093746.jpeg?format=1500w&content-type=image%2Fjpeg'], price: 13 }
-  ]);
+  ]
+});
 
-  return (
-    <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-5 mt-2">
-      {data.map((spot, index) => {
-        return <Spot
-          key={spot.title + index}
-          spot={spot}
-        />
-      })}
-    </div>
-  );
-}
-
-export default SpotList;
+export default SpotsContext;
