@@ -68,10 +68,15 @@ const EditSpot = ({spots}) => {
 
   const saveReview = async (event) => {
     if (newReviewText.trim() && newReviewAuthor.trim()) {
-      let oldReviews = [...reviews];
-      const newReview = { 'review': newReviewText, 'author': newReviewAuthor };
-      const newReviews = oldReviews.push(newReview);
-      setReviews(newReviews);
+      const newReview = { 'content': newReviewText, 'author': newReviewAuthor };
+      try {
+        const request = await requester.post(`/spot_reviews`, { spot_review: newReview, spot_id: id });
+        if (request.ok) {
+          navigate(`/spots/${id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       event.preventDefault();
     }
@@ -170,7 +175,7 @@ const EditSpot = ({spots}) => {
       </div>
       <div className='col-lg-6'>
         <h3>Reviews</h3>
-        <form id="reviews">
+        <form id="new_review">
           {editReviews(reviews)}
           <div>
             <h3>Add new comment</h3>
