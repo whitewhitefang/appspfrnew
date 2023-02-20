@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { URL } from "../Config";
+import { API_URL } from "../Config";
 import { useNavigate } from "react-router-dom";
 
 const AddSpot = () => {
@@ -34,7 +34,7 @@ const AddSpot = () => {
       newSpotForm.set(elem.name, elem);
     })
     try {
-      const request = fetch(URL + '/spots/create', "POST", JSON.stringify(newSpotForm));
+      const request = fetch(API_URL + '/spots/create', "POST", JSON.stringify(newSpotForm));
       if (request.ok) {
         navigate('/');
       }

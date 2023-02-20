@@ -1,16 +1,26 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import requester  from '../utils/requester'
 import Spot from "./Spot";
 import Loader from './Loader';
-import SpotsContext from "../store/SpotsContext";
 
-const SpotList = () => {
-  const context = useContext(SpotsContext);
-  // Mock-data
-  const [data, setData] = useState(context.spots);
+const SpotList = ({spots, setSpots}) => {
+  const [loading, setLoading] = useState(true);
 
-  let [isLoading, setIsLoading] = useState(false);
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const response = await requester.get('/spots');
 
-  if (isLoading) {
+        setSpots(response.data);
+      } catch (error) {
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+	}, [])
+
+  if (loading) {
     return (
       <div className="row">
         <div className="col-lg-12">
@@ -18,18 +28,24 @@ const SpotList = () => {
         </div>
       </div>
     );
-  } else {
+  } else if (spots.length > 0) {
     return (
       <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-5 mt-2">
-        {data.map((spot, index) => {
+        {spots.map((spot, index) => {
           return <Spot
             key={spot.title + index}
             spot={spot}
           />
         })}
       </div>
-    );
+    );} else {
+      return (
+        <div className="row">
+          No spots are available
+        </div>
+      );
+    }
+
   }
-}
 
 export default SpotList;

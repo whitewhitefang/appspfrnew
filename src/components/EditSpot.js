@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { API_URL } from "../Config";
 import SpotsContext from '../store/SpotsContext';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
@@ -72,7 +73,7 @@ const EditSpot = () => {
 
   function submitEdit() {
     try {
-      const request = fetch(URL + '/spots/create', "POST", JSON.stringify(spot));
+      const request = fetch(API_URL + '/spots/create', "POST", JSON.stringify(spot));
       if (request.ok) {
         navigate(`/spots/${id}`);
       }
