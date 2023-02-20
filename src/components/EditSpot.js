@@ -7,21 +7,24 @@ import Loader from './Loader';
 const EditSpot = ({spots}) => {
   let { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const [spot, setSpot] = useState({})
-  const [reviews, setReviews] = useState(spot?.reviews || []);
+  const [spot, setSpot] = useState({});
+  const [reviews, setReviews] = useState([]);
   const [newReviewText, setNewReviewText] = useState("");
   const [newReviewAuthor, setNewReviewAuthor] = useState("");
   const navigate = useNavigate();
 
   useEffect(()=>{
     if (spots && spots.length > 0) {
-      setSpot(spots.find(elem => elem.id == id));
+      const current_spot = spots.find(elem => elem.id == id)
+      setSpot(current_spot);
+      setReviews(current_spot.reviews);
     } else {
       const fetchData = async () => {
         try {
           const response = await requester.get(`/spots/${id}`);
 
           setSpot(response.data);
+          setReviews(response.data.reviews);
         } catch (error) {
         }
       };
@@ -77,7 +80,7 @@ const EditSpot = ({spots}) => {
   const handleEditReviewText = (event, reviewId) => {
     let newReviews = [...reviews];
     let newReview = newReviews[reviewId];
-    newReview.review = event.target.value;
+    newReview.content = event.target.value;
     newReviews[reviewId] = newReview;
     setReviews(newReviews);
   }
@@ -88,6 +91,17 @@ const EditSpot = ({spots}) => {
     newReview.author = event.target.value;
     newReviews[reviewId] = newReview;
     setReviews(newReviews);
+  }
+
+  const submitEditReviews = async (rev) => {
+    try {
+      const request = await requester.patch(`/spot_reviews/${id}`, { spot_review: rev });
+      if (request.ok) {
+        navigate(`/spots/${id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const submitEdit = async () => {
@@ -108,12 +122,14 @@ const EditSpot = ({spots}) => {
           <div key={'rev' + ind}>
             <div className="mb-3 mt-4">
               <label htmlFor="review" className="form-label">Comment</label>
-              <textarea className="form-control" id="review" rows="6" value={spot.reviews[ind].review} onChange={e => handleEditReviewText(e, ind)}></textarea>
+              <textarea type="text" className="form-control" id="content" rows="6" value={spot.reviews[ind].content} onChange={e => handleEditReviewText(e, ind)}></textarea>
             </div>
             <div className="mb-4">
               <label htmlFor="author" className="form-label">Name</label>
               <input type="text" className="form-control" id="author" value={spot.reviews[ind].author} onChange={e => handleEditReviewAuthor(e, ind)} />
             </div>
+            <button className='btn btn-success col-12 mb-5' type='button' onClick={e => submitEditReviews(rev)}>Save review</button>
+            <hr className='mb-4' />
             <button className='btn btn-danger' type='button' onClick={e => handleDeleteReview(e, ind)}>Delete this comment</button>
             <hr className='mb-4' />
           </div>
@@ -132,8 +148,6 @@ const EditSpot = ({spots}) => {
         </div>
       );
     } else {
-      console.log('spot');
-      console.log(spot);
       return (
     <div className="row">
       <div className="col-lg-6">
@@ -158,7 +172,6 @@ const EditSpot = ({spots}) => {
         <h3>Reviews</h3>
         <form id="reviews">
           {editReviews(reviews)}
-          <button className='btn btn-success col-12 mb-5'>Save reviews</button>
           <div>
             <h3>Add new comment</h3>
             <div className="mb-3">

@@ -9,7 +9,7 @@ const SeparateSpot = ({spots}) => {
     return arr.map((rev, ind) => {
       return (
         <li key={'li' + ind}>
-          <q className='me-2'>{rev.review}</q>
+          <q className='me-2'>{rev.content}</q>
           <cite>{rev.author}</cite>
         </li>
       );
