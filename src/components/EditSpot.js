@@ -52,6 +52,12 @@ const EditSpot = ({spots}) => {
     setSpot(newSpot);
   };
 
+  const handleImages = event => {
+    let newSpot = { ...spot };
+    newSpot.images = event.target.files[0];
+    setSpot(newSpot);
+  }
+
   const handleDeleteReview = (event, reviewId) => {
     const newReviews = [...reviews]
     newReviews.splice(+reviewId, 1);
@@ -169,6 +175,10 @@ const EditSpot = ({spots}) => {
           <div className="mb-3">
             <label htmlFor="price" className="form-label">Price</label>
             <input type="number" className="form-control" id="price" step="1" min="0" value={spot.price} onChange={handlePrice} />
+          </div>
+          <div className="col-sm-12">
+            <label htmlFor={"images"} className="col-sm-3 control-label">Images</label>
+            <input type="file" onChange={handleImages} accept="image/*" className="form-control" multiple />
           </div>
           <button className='btn btn-success text-center col-12' type='button' onClick={submitEdit}>Save spot</button>
         </form>

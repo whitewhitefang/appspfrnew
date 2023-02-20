@@ -1,9 +1,12 @@
+import { useState, useEffect } from 'react';
+import requester  from '../utils/requester'
 import Carousel from "./Carousel";
 import { useParams, Link } from 'react-router-dom';
 
 const SeparateSpot = ({spots}) => {
   let { id } = useParams();
-  const spot = spots.find(elem => elem.id == id);
+  const [spot, setSpot] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const revblock = arr => {
     return arr.map((rev, ind) => {
@@ -16,7 +19,27 @@ const SeparateSpot = ({spots}) => {
     });
   };
 
+  useEffect(()=>{
+    if (spots && spots.length > 0) {
+      const current_spot = spots.find(elem => elem.id == id)
+      setSpot(current_spot);
+    } else {
+      const fetchData = async () => {
+        try {
+          const response = await requester.get(`/spots/${id}`);
+
+          setSpot(response.data);
+        } catch (error) {
+        }
+      };
+
+      fetchData();
+    }
+    setLoading(false);
+	}, [])
+
   return (
+
     <div className="row mt-2">
       <div className="col-lg-6">
         { spot.images && <Carousel images={spot.images} carId={'car' + id} /> }
