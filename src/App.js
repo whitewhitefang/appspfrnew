@@ -21,7 +21,7 @@ function App() {
             <Route path=":id" element={<SeparateSpot spots={spots} />} />
           </Route>
           <Route path="spot-edit">
-            <Route path=":id" element={<EditSpot />} />
+            <Route path=":id" element={<EditSpot spots={spots} />} />
           </Route>
           <Route path="add" element={<AddSpot />} />
           <Route path="*" element={<NoMatchPage />} />

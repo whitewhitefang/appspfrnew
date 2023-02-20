@@ -1,16 +1,35 @@
-import { useState, useContext } from 'react';
-import { API_URL } from "../Config";
-import SpotsContext from '../store/SpotsContext';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import requester  from '../utils/requester'
+import { useParams, useNavigate } from 'react-router-dom';
+import Loader from './Loader';
 
-const EditSpot = () => {
-  let context = useContext(SpotsContext);
+
+const EditSpot = ({spots}) => {
   let { id } = useParams();
-  const [spot, setSpot] = useState(context.spots.find(elem => +elem.id === +id));
-  const [reviews, setReviews] = useState(spot.reviews);
+  const [loading, setLoading] = useState(true);
+  const [spot, setSpot] = useState({})
+  const [reviews, setReviews] = useState(spot?.reviews || []);
   const [newReviewText, setNewReviewText] = useState("");
   const [newReviewAuthor, setNewReviewAuthor] = useState("");
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if (spots && spots.length > 0) {
+      setSpot(spots.find(elem => elem.id == id));
+    } else {
+      const fetchData = async () => {
+        try {
+          const response = await requester.get(`/spots/${id}`);
+
+          setSpot(response.data);
+        } catch (error) {
+        }
+      };
+
+      fetchData();
+    }
+    setLoading(false);
+	}, [])
 
   const handleTitle = event => {
     let newSpot = { ...spot };
@@ -71,19 +90,19 @@ const EditSpot = () => {
     setReviews(newReviews);
   }
 
-  function submitEdit() {
+  const submitEdit = async () => {
     try {
-      const request = fetch(API_URL + '/spots/create', "POST", JSON.stringify(spot));
+      const request = await requester.patch(`/spots/${id}`, { spot });
       if (request.ok) {
         navigate(`/spots/${id}`);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   }
 
   const editReviews = reviews => {
-    if (reviews.length) {
+    if (reviews && reviews.length) {
       return reviews.map((rev, ind) => {
         return (
           <div key={'rev' + ind}>
@@ -104,7 +123,18 @@ const EditSpot = () => {
     return "";
   }
 
-  return (
+    if (loading) {
+      return (
+        <div className="row">
+          <div className="col-lg-12">
+            <Loader />
+          </div>
+        </div>
+      );
+    } else {
+      console.log('spot');
+      console.log(spot);
+      return (
     <div className="row">
       <div className="col-lg-6">
         <h3>Edit a spot</h3>
@@ -144,7 +174,8 @@ const EditSpot = () => {
         </form>
       </div >
     </div >
-  );
+    );
+  };
 }
 
 export default EditSpot;
