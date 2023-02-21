@@ -1,26 +1,15 @@
-import { useState, useContext, useEffect } from "react";
-import requester  from '../utils/requester'
+import { useState, useEffect } from "react";
 import Spot from "./Spot";
 import Loader from './Loader';
 
-const SpotList = ({spots, setSpots}) => {
-  const [loading, setLoading] = useState(true);
+const SpotList = props => {
+  const [spots, setSpots] = useState(props.sdata);
 
-  useEffect(()=>{
-    const fetchData = async () => {
-      try {
-        const response = await requester.get('/spots');
+  useEffect(() => {
+    setSpots(props.sdata);
+  }, [props.sdata]);
 
-        setSpots(response.data);
-      } catch (error) {
-      }
-      setLoading(false);
-    };
-
-    fetchData();
-	}, [])
-
-  if (loading) {
+  if (props.loading) {
     return (
       <div className="row">
         <div className="col-lg-12">
