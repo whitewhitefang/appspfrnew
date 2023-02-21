@@ -11,7 +11,7 @@ import requester from './utils/requester';
 
 
 function App() {
-  const [spots, setSpots] = useState(null);
+  const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState("");
   const [orderTo, setOrderTo] = useState("");
@@ -52,11 +52,11 @@ function App() {
 	}, []);
 
   useEffect(() => {
-    let spots = [...spots];
+    let currSpots = [...spots];
     if (!order && !orderTo) {
-      setSpots(spots);
+      setSpots(currSpots);
     } else {
-      const newSpots = sorting(order, orderTo, spots);
+      const newSpots = sorting(order, orderTo, currSpots);
       setSpots(newSpots);
     }
   }, [order, orderTo]);

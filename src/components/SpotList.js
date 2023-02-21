@@ -17,7 +17,7 @@ const SpotList = props => {
         </div>
       </div>
     );
-  } else if (spots.length > 0) {
+  } else if (spots?.length > 0) {
     return (
       <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-5 mt-2">
         {spots.map((spot, index) => {
