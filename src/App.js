@@ -1,12 +1,12 @@
 import './App.css';
 import { useState, useEffect } from "react";
-import SpotList from './components/SpotList';
-import AddSpot from './components/AddSpot';
-import NavBar from './components/NavBar';
-import NoMatchPage from './components/NoMatchPage';
-import SeparateSpot from './components/SeparateSpot';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import EditSpot from './components/EditSpot';
+import SpotList from './pages/SpotList';
+import AddSpot from './pages/AddSpot';
+import EditSpot from './pages/EditSpot';
+import NoMatchPage from './pages/NoMatchPage';
+import SeparateSpot from './pages/SeparateSpot';
+import NavBar from './components/NavBar';
 import requester from './utils/requester';
 
 

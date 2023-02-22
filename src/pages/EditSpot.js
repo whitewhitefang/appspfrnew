@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import requester  from '../utils/requester'
 import { useParams, useNavigate } from 'react-router-dom';
-import Loader from './Loader';
+import Loader from '../components/Loader';
 
 
 const EditSpot = ({spots}) => {

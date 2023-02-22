@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Spot from "./Spot";
-import Loader from './Loader';
+import Spot from "../components/Spot";
+import Loader from '../components/Loader';
 
 const SpotList = props => {
   const [spots, setSpots] = useState(props.sdata);

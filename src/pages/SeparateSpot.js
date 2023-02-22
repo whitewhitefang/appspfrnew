@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import requester  from '../utils/requester'
-import Carousel from "./Carousel";
+import Carousel from "../components/Carousel";
 import { useParams, Link } from 'react-router-dom';
-import Loader from './Loader';
+import Loader from '../components/Loader';
 
 const SeparateSpot = ({spots}) => {
   let { id } = useParams();
