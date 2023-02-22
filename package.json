@@ -17,7 +17,7 @@
     "sass": "^1.58.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://github.com/camaradaVinogrado/spotsfront",
+  "homepage": "https://github.com/whitewhitefang/appspfrnew",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
